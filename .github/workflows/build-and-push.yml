@@ -1,7 +1,5 @@
 on:
-  push:
-    workflow_dispatch:
-    - master
+  workflow_dispatch:
 
 name: CreandoImagen
 jobs:
