@@ -13,6 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Parse json input
-        id: json
-        run: |
-          echo ${{ fromJson(github.event.inputs.parameters_json).targetPlatform }}
+        run: echo "Hola Mundo"
