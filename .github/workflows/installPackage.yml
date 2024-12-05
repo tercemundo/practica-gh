@@ -1,8 +1,7 @@
 name: Install Package
 
 on:
-  repository_dispatch:
-    types: [install_package]
+  workflow_dispatch:
 
 jobs:
   install-package:
