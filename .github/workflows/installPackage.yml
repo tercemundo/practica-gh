@@ -1,7 +1,11 @@
 name: Install Package
-
 on:
   workflow_dispatch:
+    inputs:
+      package:
+        description: 'Nombre del paquete a instalar'
+        required: true
+        type: string
 
 jobs:
   install-package:
@@ -9,29 +13,27 @@ jobs:
     steps:
     - name: Validate Package Input
       env:
-        PACKAGE_NAME: ${{ github.event.client_payload.package }}
+        PACKAGE_NAME: ${{ inputs.package }}
       run: |
         if [ -z "$PACKAGE_NAME" ]; then
           echo "Error: No se especificó ningún paquete para instalar"
           exit 1
         fi
-
     - name: Update Package Lists
       run: sudo apt update
-
     - name: Install Specified Package
       env:
-        PACKAGE_NAME: ${{ github.event.client_payload.package }}
+        PACKAGE_NAME: ${{ inputs.package }}
       run: |
         echo "Instalando paquete: $PACKAGE_NAME"
         sudo apt-get install -y "$PACKAGE_NAME"
-
     - name: Verify Package Installation
       env:
-        PACKAGE_NAME: ${{ github.event.client_payload.package }}
+        PACKAGE_NAME: ${{ inputs.package }}
       run: |
         if dpkg -s "$PACKAGE_NAME" &> /dev/null; then
           echo "Paquete $PACKAGE_NAME instalado correctamente"
         else
           echo "Error: No se pudo instalar $PACKAGE_NAME"
           exit 1
+        fi
