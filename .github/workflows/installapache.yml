@@ -1,0 +1,25 @@
+name: Instalar Apache2
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Razón para ejecutar la instalación'
+        required: false
+        default: 'Instalación manual de Apache2'
+
+jobs:
+  install-apache:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v3
+
+    - name: Actualizar repositorios
+      run: sudo apt update
+
+    - name: Instalar Apache2
+      run: sudo apt -y install apache2
+
+    - name: Verificar estado de Apache2
+      run: systemctl status apache2
