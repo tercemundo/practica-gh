@@ -1,0 +1,32 @@
+name: Instalar Apache2
+
+on:
+  repository_dispatch:
+    types: [trigger_install]
+
+jobs:
+  install-apache:
+    runs-on: self-hosted
+    steps:
+    - name: Validar API Key
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CUSTOM_API_KEY: ${{ secrets.CUSTOM_API_KEY }}
+        RECEIVED_API_KEY: ${{ github.event.client_payload.api_key }}
+      run: |
+        if [[ "$RECEIVED_API_KEY" != "$CUSTOM_API_KEY" ]]; then
+          echo "Error: API Key inválida"
+          exit 1
+        fi
+
+    - name: Checkout del repositorio
+      uses: actions/checkout@v3
+
+    - name: Actualizar repositorios
+      run: sudo apt update
+
+    - name: Instalar Apache2
+      run: sudo apt -y install apache2
+
+    - name: Verificar estado de Apache2
+      run: systemctl status apache2
