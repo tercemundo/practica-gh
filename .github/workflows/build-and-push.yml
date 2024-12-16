@@ -16,7 +16,7 @@ jobs:
         name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.fwender }}
+          username: ${{ secrets.FWENDER }}
           password: ${{ secrets.01C0m0d0r0 }}
       -
         name: Build and push
