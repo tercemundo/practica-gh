@@ -23,4 +23,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: fwendertech/prueba${{ github.sha }}
+          tags: fwender/prueba${{ github.sha }}
